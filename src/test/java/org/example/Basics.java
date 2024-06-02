@@ -22,7 +22,7 @@ public class Basics {
                 .when().post("maps/api/place/add/json")
                 .then().log().all().assertThat().statusCode(200).body("scope", equalTo("APP")).header("server", "Apache/2.4.52 (Ubuntu)").extract().response().asString();
 
-        System.out.println("===RESPONSE BODY===");
+        System.out.println("===RESPONSE BODY Add Place===");
         System.out.println(response);
         JsonPath js = new JsonPath(response);
         String placeID = js.getString("place_id");
@@ -30,16 +30,25 @@ public class Basics {
         System.out.println(placeID);
 
         //Update Place Testing
+        String address = "70 winter walk, USA";
         given().log().all().queryParam("key", "qaclick123").header("Content-type",  "application/json")
                 .body("{\n" +
                         "\"place_id\":\""+placeID+"\",\n" +
-                        "\"address\":\"70 winter walk, USA\",\n" +
+                        "\"address\":\""+address+"\",\n" +
                         "\"key\":\"qaclick123\"\n" +
                         "}")
                 .when().put("maps/api/place/update/json")
                 .then().assertThat().log().all().statusCode(200).body("msg", equalTo("Address successfully updated"));
 
         //Get Place Testing - verify place updated
+        String getPlaceResponse = given().log().all().queryParam("key", "qaclick123").queryParam("place_id", placeID)
+                .when().get("maps/api/place/get/json")
+                .then().assertThat().log().all().statusCode(200).extract().response().asString();
+
+        System.out.println("===RESPONSE BODY - Get Place===");
+        JsonPath js1 = new JsonPath(getPlaceResponse);
+        String actualAddress = js1.getString("address");
+        System.out.println(actualAddress);
 
     }
 }
