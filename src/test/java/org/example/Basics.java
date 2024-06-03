@@ -6,22 +6,29 @@ import org.example.files.ReUsableMethod;
 import org.example.files.payload;
 import org.testng.Assert;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class Basics {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Validate if Add place API is working as expected
 
         //Given - all input details
         //When - Submit the API - resource, http method
         //Then- Validate the response
 
+
+
         //Add Place testing
 
         RestAssured.baseURI = "https://rahulshettyacademy.com";
         String response = given().log().all().queryParam("key", "qaclick123").header("Content-type",  "application/json")
-                .body(payload.addPlace())
+                //Handling static payload from file.json
+                .body(new String(Files.readAllBytes(Paths.get("C:\\Users\\HOME\\IdeaProjects\\RestAssuredDemoProject\\src\\main\\java\\org\\example\\Data\\addPlace.json"))))
                 .when().post("maps/api/place/add/json")
                 .then().log().all().assertThat().statusCode(200).body("scope", equalTo("APP")).header("server", "Apache/2.4.52 (Ubuntu)").extract().response().asString();
 
