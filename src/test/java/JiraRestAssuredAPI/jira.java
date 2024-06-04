@@ -18,7 +18,7 @@ public class jira {
 
         //Login Scenario - Using Cookies
         SessionFilter session = new SessionFilter();
-        String response = given().header("Content-Type", "application/json")
+        String response = given().relaxedHTTPSValidation().header("Content-Type", "application/json")
                         .body("{ \n" +
                                 "    \"username\": \"your-username\", \n" +
                                 "    \"password\": \"your-password\" \n" +
