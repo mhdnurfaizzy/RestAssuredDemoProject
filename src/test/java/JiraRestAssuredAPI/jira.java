@@ -3,6 +3,8 @@ package JiraRestAssuredAPI;
 import io.restassured.RestAssured;
 import io.restassured.filter.session.SessionFilter;
 
+import java.io.File;
+
 import static io.restassured.RestAssured.given;
 
 public class jira {
@@ -33,5 +35,12 @@ public class jira {
                         "}").filter(session)
                 .when().post("/rest/api/2/issue/{key}/comment")
                 .then().log().all().assertThat().statusCode(201);
+
+        //Add attachment to issue
+        given().header("X-Atlassian-Token","no-check").filter(session).pathParam("key", "JIR-1")
+                .header("Content-Type", "multipart/form-data")
+                .multiPart("file", new File("C:\\Users\\HOME\\IdeaProjects\\RestAssuredDemoProject\\src\\test\\java\\JiraRestAssuredAPI\\note.txt"))
+                .when().post("/rest/api/2/issue/{key}/attachments")
+                .then().log().all().assertThat().statusCode(200);
     }
 }
