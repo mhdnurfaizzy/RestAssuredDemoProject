@@ -5,10 +5,10 @@ public class getCourse {
 
     private String url;
     private String services;
-    private String expertice;
+    private String expertise;
     private Courses courses;
     private String instructor;
-    private String linkedin;
+    private String linkedIn;
 
     public String getUrl() {
         return url;
@@ -26,12 +26,12 @@ public class getCourse {
         this.services = services;
     }
 
-    public String getExpertice() {
-        return expertice;
+    public String getExpertise() {
+        return expertise;
     }
 
-    public void setExpertice(String expertice) {
-        this.expertice = expertice;
+    public void setExpertise(String expertise) {
+        this.expertise = expertise;
     }
 
     public Courses getCourses() {
@@ -50,12 +50,12 @@ public class getCourse {
         this.instructor = instructor;
     }
 
-    public String getLinkedin() {
-        return linkedin;
+    public String getLinkedIn() {
+        return linkedIn;
     }
 
-    public void setLinkedin(String linkedin) {
-        this.linkedin = linkedin;
+    public void setLinkedIn(String linkedIn) {
+        this.linkedIn = linkedIn;
     }
 
 
