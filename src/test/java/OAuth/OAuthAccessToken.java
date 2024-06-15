@@ -1,7 +1,10 @@
 package OAuth;
 
+import POJO.api;
 import POJO.getCourse;
 import io.restassured.path.json.JsonPath;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -34,6 +37,14 @@ public class OAuthAccessToken {
 
         System.out.println(gc.getLinkedIn());
         System.out.println(gc.getInstructor());
+
+//        64. Solving Complex Queries from Json with simple POJO methods -Part 1
+        List<api> apiCourses = gc.getCourses().getApi();
+        for(int i=0;i<apiCourses.size();i++) {
+            if(apiCourses.get(i).getCourseTitle().equalsIgnoreCase("SoapUI Webservices testing")){
+                System.out.println(apiCourses.get(i).getPrice());
+            }
+        }
 
     }
 }
