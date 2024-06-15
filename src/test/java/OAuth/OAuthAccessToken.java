@@ -1,8 +1,8 @@
 package OAuth;
 
-import POJO.api;
-import POJO.getCourse;
-import POJO.webAutomation;
+import deserializationPOJO.api;
+import deserializationPOJO.getCourse;
+import deserializationPOJO.webAutomation;
 import io.restassured.path.json.JsonPath;
 import org.testng.Assert;
 

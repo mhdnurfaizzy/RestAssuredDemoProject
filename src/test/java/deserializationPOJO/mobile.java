@@ -1,10 +1,10 @@
-package POJO;
+package deserializationPOJO;
 
-public class api {
+public class mobile {
     private String courseTitle;
     private String price;
 
-    
+
     public String getCourseTitle() {
         return courseTitle;
     }

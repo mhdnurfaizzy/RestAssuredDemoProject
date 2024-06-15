@@ -1,10 +1,10 @@
-package POJO;
+package deserializationPOJO;
 
-public class webAutomation {
+public class api {
     private String courseTitle;
     private String price;
 
-
+    
     public String getCourseTitle() {
         return courseTitle;
     }
