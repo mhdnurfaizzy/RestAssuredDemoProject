@@ -1,5 +1,6 @@
 package OAuth;
 
+import POJO.getCourse;
 import io.restassured.path.json.JsonPath;
 
 import static io.restassured.RestAssured.given;
@@ -25,13 +26,14 @@ public class OAuthAccessToken {
         System.out.println(accessToken);
 
         //GetCourseDetails
-        String r2= given()
+        getCourse gc= given()
                 .queryParams("access_token", accessToken)
                 .when()
                 .get("https://rahulshettyacademy.com/oauthapi/getCourseDetails")
-                .asString();
+                .as(getCourse.class);
 
-        System.out.println(r2);
+        System.out.println(gc.getLinkedIn());
+        System.out.println(gc.getInstructor());
 
     }
 }
