@@ -6,7 +6,7 @@ public class getCourse {
     private String url;
     private String services;
     private String expertice;
-    private String courses;
+    private Courses courses;
     private String instructor;
     private String linkedin;
 
@@ -34,11 +34,11 @@ public class getCourse {
         this.expertice = expertice;
     }
 
-    public String getCourses() {
+    public Courses getCourses() {
         return courses;
     }
 
-    public void setCourses(String courses) {
+    public void setCourses(Courses courses) {
         this.courses = courses;
     }
 
