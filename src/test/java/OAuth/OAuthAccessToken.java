@@ -2,8 +2,12 @@ package OAuth;
 
 import POJO.api;
 import POJO.getCourse;
+import POJO.webAutomation;
 import io.restassured.path.json.JsonPath;
+import org.testng.Assert;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -11,6 +15,8 @@ import static io.restassured.RestAssured.given;
 public class OAuthAccessToken {
 
     public static void main(String[] args) throws InterruptedException {
+
+        String[] courseTitle={"Selenium Webdriver Java", "Cypress", "Protractor"};
 
         //AuthorizationServer
         String response =
@@ -45,6 +51,19 @@ public class OAuthAccessToken {
                 System.out.println(apiCourses.get(i).getPrice());
             }
         }
+
+//        65. Solving Complex Queries from Json with simple POJO methods-Part 2
+//        Get the course names of webAutomation
+
+        ArrayList<String> a = new ArrayList<>();
+
+        List<webAutomation> wa = gc.getCourses().getWebAutomation();
+        for (int j=0;j<wa.size();j++) {
+            a.add(wa.get(j).getCourseTitle());
+        }
+        List<String> expectedList = Arrays.asList(courseTitle);
+        Assert.assertTrue(a.equals(expectedList));
+
 
     }
 }
