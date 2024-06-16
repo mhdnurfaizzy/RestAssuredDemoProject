@@ -6,6 +6,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -52,5 +54,26 @@ public class EcommerceApiTest {
 
         JsonPath js = new JsonPath(addProductResponse);
         String productId = js.get("productId");
+
+        //Create order
+        RequestSpecification createOrderBaseReq = new RequestSpecBuilder()
+                .setBaseUri("https://rahulshettyacademy.com")
+                .addHeader("authorization", token).setContentType(ContentType.JSON).build();
+
+        OrderDetails orderDetails = new OrderDetails();
+        orderDetails.setCountry("India");
+        orderDetails.setProductOrderedId(productId);
+
+        List<OrderDetails> orderDetailsList = new ArrayList<OrderDetails>();
+        orderDetailsList.add(orderDetails);
+        Orders orders = new Orders();
+        orders.setOrders(orderDetailsList);
+
+        RequestSpecification createOrderReq = given().log().all().spec(createOrderBaseReq).body(orders);
+
+        String responseAddOrdere = createOrderReq.when().post("/api/ecom/order/create-order")
+                .then().log().all().extract().response().asString();
+
+        System.out.println(responseAddOrdere);
     }
 }
