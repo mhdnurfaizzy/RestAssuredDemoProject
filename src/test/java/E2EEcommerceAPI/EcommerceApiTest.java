@@ -4,6 +4,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
+import org.testng.Assert;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,7 +26,9 @@ public class EcommerceApiTest {
         loginRequest.setUserEmail("izi@gmail.com");
         loginRequest.setUserPassword("Testing890-");
 
-        RequestSpecification reqLogin = given().log().all().spec(req).body(loginRequest);
+
+        //SSL HTTPS relaxed
+        RequestSpecification reqLogin = given().relaxedHTTPSValidation().log().all().spec(req).body(loginRequest);
 
         LoginResponse loginResponse =
                 reqLogin.
@@ -75,5 +78,19 @@ public class EcommerceApiTest {
                 .then().log().all().extract().response().asString();
 
         System.out.println(responseAddOrdere);
+
+        //Delete Product
+        RequestSpecification deleteProductBaseReq = new RequestSpecBuilder()
+                .setBaseUri("https://rahulshettyacademy.com")
+                .addHeader("authorization", token).setContentType(ContentType.JSON).build();
+
+        RequestSpecification deleteProductReq = given().log().all().spec(deleteProductBaseReq).pathParam("productId", productId);
+
+        String deleteProductResponse = deleteProductReq.when().delete("/api/ecom/product/delete-product/{productId}")
+                .then().log().all().extract().response().asString();
+
+        JsonPath js1 = new JsonPath(deleteProductResponse);
+
+        Assert.assertEquals("Product Deleted Successfully", js1.get("message"));
     }
 }
